@@ -8,7 +8,7 @@
 
     <servlet>
         <servlet-name>restaurantsServlet</servlet-name>
-        <servlet-class>web.RestaurantsServlet</servlet-class>
+        <servlet-class>ru.lunchvoter.web.RestaurantsServlet</servlet-class>
         <load-on-startup>0</load-on-startup>
     </servlet>
     <servlet-mapping>

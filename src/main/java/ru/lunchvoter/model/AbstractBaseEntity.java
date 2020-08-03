@@ -1,4 +1,4 @@
-package model;
+package ru.lunchvoter.model;
 
 import org.hibernate.Hibernate;
 

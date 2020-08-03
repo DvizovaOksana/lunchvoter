@@ -1,4 +1,6 @@
-package model;
+package ru.lunchvoter.model;
+
+import ru.lunchvoter.model.AbstractBaseEntity;
 
 import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
