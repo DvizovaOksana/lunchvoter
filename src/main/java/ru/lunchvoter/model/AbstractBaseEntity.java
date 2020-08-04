@@ -1,12 +1,13 @@
 package ru.lunchvoter.model;
 
 import org.hibernate.Hibernate;
+import org.springframework.data.domain.Persistable;
 
 import javax.persistence.*;
 
 @MappedSuperclass
 @Access(AccessType.FIELD)
-public class AbstractBaseEntity {
+public class AbstractBaseEntity implements Persistable<Integer> {
     public static final int START_SEQ = 100000;
 
     @Id
@@ -21,8 +22,18 @@ public class AbstractBaseEntity {
         this.id = id;
     }
 
+    @Override
+    public Integer getId() {
+        return id;
+    }
+
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    @Override
+    public boolean isNew() {
+        return getId() == null;
     }
 
     @Override
