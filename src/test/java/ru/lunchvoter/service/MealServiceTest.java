@@ -1,7 +1,9 @@
 package ru.lunchvoter.service;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import ru.lunchvoter.RestaurantTestData;
 import ru.lunchvoter.model.Meal;
 import ru.lunchvoter.util.exception.NotFoundException;
 
@@ -39,10 +41,36 @@ class MealServiceTest extends AbstractServiceTest{
     }
 
     @Test
+    void deleteNotFound() throws Exception {
+        assertThrows(NotFoundException.class, () -> service.delete(NOT_FOUND, REST1_ID));
+    }
+
+    @Test
+    void deleteNotOwn() throws Exception {
+        assertThrows(NotFoundException.class, () -> service.delete(MEAL1_ID, REST2_ID));
+    }
+
+    @Test
     void create() {
+        Meal meal = getNew();
+        Meal created = service.create(meal, meal.getRestaurant().getId());
+        meal.setId(created.getId());
+        MEAL_MATCHER.assertMatch(created, meal);
+        MEAL_MATCHER.assertMatch(service.get(created.getId(), created.getRestaurant().getId()), meal);
     }
 
     @Test
     void update() {
+        Meal meal = getUpdated();
+        service.update(meal, meal.getRestaurant().getId());
+        MEAL_MATCHER.assertMatch(service.get(meal.getId(), meal.getRestaurant().getId()), meal);
+    }
+
+    @Test
+    void updateNotOwn() throws Exception {
+        Meal meal = MEAL1;
+        meal.setRestaurant(RESTAURANT1);
+        NotFoundException exception = assertThrows(NotFoundException.class, () -> service.update(meal, REST2_ID));
+        //Assertions.assertEquals("Not found entity with id=" + MEAL1_ID, exception.getMessage());
     }
 }

@@ -27,6 +27,7 @@ public class MealTestData {
 
     public static final Meal MEAL7 = new Meal(MEAL1_ID + 6, of(2020, Month.AUGUST, 5), "Pizza", 500*100);
     public static final Meal MEAL8 = new Meal(MEAL1_ID + 7, of(2020, Month.AUGUST, 5), "Pasta", 350*100);
+
     {
         MEAL1.setRestaurant(RESTAURANT1);
         MEAL3.setRestaurant(RESTAURANT1);
@@ -43,10 +44,14 @@ public class MealTestData {
     public static final List<Meal> REST2_MEALS = List.of(MEAL6, MEAL4, MEAL2);
 
     public static Meal getNew() {
-        return new Meal(null, now().toLocalDate(), "NEW BIG TASTY", 300*100);
+        Meal meal = new Meal(null, now().toLocalDate(), "NEW BIG TASTY", 300*100);
+        meal.setRestaurant(RESTAURANT1);
+        return meal;
     }
 
     public static Meal getUpdated() {
-        return new Meal(MEAL1_ID, MEAL1.getDate(), "UPDATED CHEESEBURGER", 55*100);
+        Meal updated = new Meal(MEAL1_ID, MEAL1.getDate(), "UPDATED CHEESEBURGER", 55*100);
+        updated.setRestaurant(RESTAURANT1);
+        return updated;
     }
 }

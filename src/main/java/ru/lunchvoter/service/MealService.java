@@ -33,19 +33,21 @@ public class MealService {
         return mealDao.getAll(restaurantId, date);
     }
 
-    public void delete(int id, int restaurantId){
-        mealDao.delete(id, restaurantId);
+    public void delete(int id, int restaurantId) {
+        checkNotFoundWithId(mealDao.delete(id, restaurantId) != 0, id);
     }
 
-    public Meal create(Meal meal, int restaurantId){
+    public Meal create(Meal meal, Integer restaurantId){
         Assert.notNull(meal, "meal must not be null");
-        Restaurant restaurant = restaurantDao.getOne(restaurantId);
-        meal.setRestaurant(restaurant);
+        Assert.notNull(restaurantId, "restaurantId must not be null");
+        if (!meal.isNew() && get(meal.getId(), restaurantId) == null) {
+            return null;
+        }
+        meal.setRestaurant(restaurantDao.getOne(restaurantId));
         return mealDao.save(meal);
     }
 
-    public Meal update(Meal meal, int restaurantId){
-        Assert.notNull(meal, "meal must not be null");
-        return mealDao.save(meal);
+    public Meal update(Meal meal, Integer restaurantId) {
+        return checkNotFoundWithId(create(meal, restaurantId), meal.getId());
     }
 }
