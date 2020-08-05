@@ -6,9 +6,12 @@ import ru.lunchvoter.dao.MealDao;
 import ru.lunchvoter.dao.RestaurantDao;
 import ru.lunchvoter.model.Meal;
 import ru.lunchvoter.model.Restaurant;
+import ru.lunchvoter.util.exception.NotFoundException;
 
 import java.time.LocalDate;
 import java.util.List;
+
+import static ru.lunchvoter.util.ValidationUtil.checkNotFoundWithId;
 
 @Service
 public class MealService {
@@ -20,9 +23,10 @@ public class MealService {
         this.restaurantDao = restaurantDao;
     }
 
-    public Meal get(int id, int restaurantId){
-        Meal meal =  mealDao.getOne(id);
-        return (meal != null && meal.getRestaurant().getId() == restaurantId )? meal : null;
+    public Meal get(int id, int restaurantId) throws NotFoundException {
+        return checkNotFoundWithId(mealDao.findById(id)
+                .filter(meal -> meal.getRestaurant().getId() == restaurantId)
+                .orElse(null), id);
     }
 
     public List<Meal> getAll(int restaurantId, LocalDate date){

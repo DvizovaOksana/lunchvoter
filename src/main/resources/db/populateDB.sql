@@ -20,9 +20,12 @@ VALUES ('McDonalds'),
        ('Burger King');
 
 INSERT INTO meals (name, date, price, RESTAURANT_ID)
-VALUES ('Cheeseburger', today, 50*100, 100002),
-       ('Big Mack', today, 150*100, 100002),
-       ('Cheeseburger', today, 45*100, 100003),
-       ('Big King', today, 170*100, 100003),
-       ('Water', today, 20*100, 100002),
-       ('Juice', today, 70*100, 100003);
+VALUES ('Cheeseburger', '2020-08-04', 50*100, 100002),
+       ('Big Mack', '2020-08-04', 150*100, 100002),
+       ('Cheeseburger', '2020-08-04', 45*100, 100003),
+       ('Big King', '2020-08-04', 170*100, 100003),
+       ('Water', '2020-08-04', 20*100, 100002),
+       ('Juice', '2020-08-04', 70*100, 100003),
+       ('Pizza', '2020-08-05', 500*100, 100003),
+       ('Pasta', '2020-08-05', 350*100, 100002)
+       ;
