@@ -2,7 +2,6 @@ package ru.lunchvoter.service;
 
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
-import ru.lunchvoter.dao.MealDao;
 import ru.lunchvoter.dao.RestaurantDao;
 import ru.lunchvoter.model.Restaurant;
 import ru.lunchvoter.util.exception.NotFoundException;
@@ -16,7 +15,7 @@ import static ru.lunchvoter.util.ValidationUtil.checkNotFoundWithId;
 public class RestaurantService {
     private final RestaurantDao dao;
 
-    public RestaurantService(RestaurantDao dao, MealDao mealDao) {
+    public RestaurantService(RestaurantDao dao) {
         this.dao = dao;
     }
 

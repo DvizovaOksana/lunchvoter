@@ -29,5 +29,5 @@ public interface RestaurantDao extends JpaRepository<Restaurant, Integer> {
     Optional<Restaurant> getWithDishesForDate(@Param("id") int id, @Param("date") LocalDate date);
 
     @Query("SELECT DISTINCT r FROM Restaurant r LEFT JOIN FETCH r.meals m WHERE m.date=:date ORDER BY r.name")
-    List<Restaurant> getAllWithDishesForDate(LocalDate date);
+    List<Restaurant> getAllWithDishesForDate(@Param("date")LocalDate date);
 }

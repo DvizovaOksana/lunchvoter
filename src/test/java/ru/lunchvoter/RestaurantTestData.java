@@ -10,6 +10,8 @@ import static ru.lunchvoter.MealTestData.*;
 import static ru.lunchvoter.model.AbstractBaseEntity.START_SEQ;
 
 public class RestaurantTestData {
+    public static final TestMatcher<Restaurant> RESTAURANT_MATCHER = TestMatcher.usingFieldsWithIgnoringComparator(Restaurant.class, "meals");
+
     public static final int REST1_ID = START_SEQ + 2;
     public static final int REST2_ID = REST1_ID + 1;
 
