@@ -3,6 +3,7 @@ package ru.lunchvoter.service;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import ru.lunchvoter.MealTestData;
 import ru.lunchvoter.RestaurantTestData;
 import ru.lunchvoter.model.Meal;
 import ru.lunchvoter.util.exception.NotFoundException;
@@ -52,7 +53,7 @@ class MealServiceTest extends AbstractServiceTest{
 
     @Test
     void create() {
-        Meal meal = getNew();
+        Meal meal = MealTestData.getNew();
         Meal created = service.create(meal, meal.getRestaurant().getId());
         meal.setId(created.getId());
         MEAL_MATCHER.assertMatch(created, meal);
@@ -61,7 +62,7 @@ class MealServiceTest extends AbstractServiceTest{
 
     @Test
     void update() {
-        Meal meal = getUpdated();
+        Meal meal = MealTestData.getUpdated();
         service.update(meal, meal.getRestaurant().getId());
         MEAL_MATCHER.assertMatch(service.get(meal.getId(), meal.getRestaurant().getId()), meal);
     }
