@@ -8,6 +8,7 @@ import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
+import java.util.List;
 
 import static java.time.LocalDateTime.now;
 import static java.time.LocalDateTime.of;
@@ -29,6 +30,8 @@ public class UserTestData {
     public static final User USER = new User(USER_ID, "User", "user@gmail.com", "password", Role.USER);
     public static final User ADMIN = new User(ADMIN_ID, "Admin", "admin@gmail.com", "admin", Role.ADMIN, Role.USER);
 
+    public static final List<User> USERS = Arrays.asList(USER, ADMIN);
+
     public static User getNew() {
         return new User(null, "NewUser", "new@gmail.com", "newPassword", false, new Date(), Collections.singleton(Role.USER));
     }
@@ -38,6 +41,10 @@ public class UserTestData {
         updated.setName("UpdatedName");
         updated.setRoles(Collections.singletonList(Role.ADMIN));
         return updated;
+    }
+
+    public static User getDuplicate(){
+        return new User(null, "Duplicate", "user@gmail.com", "newPass", Role.USER);
     }
 
 
