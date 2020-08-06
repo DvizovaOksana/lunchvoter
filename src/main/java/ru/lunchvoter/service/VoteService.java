@@ -1,12 +1,13 @@
 package ru.lunchvoter.service;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 import ru.lunchvoter.dao.RestaurantDao;
 import ru.lunchvoter.dao.UserDao;
 import ru.lunchvoter.dao.VoteDao;
 import ru.lunchvoter.model.Vote;
-import ru.lunchvoter.util.exception.LateForVoteException;
+import ru.lunchvoter.util.exception.LateVoteException;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -30,29 +31,29 @@ public class VoteService {
         return checkNotFoundWithId(dao.findByUserId(userId), userId);
     }
 
-    public Vote findByUserIdAndDate(int userId, LocalDate date){
+    public Vote getByUserIdAndDate(int userId, LocalDate date){
         Assert.notNull(date, "date must not be null");
         return checkNotFoundWithId(dao.findByUserIdAndDate(userId, date), userId);
     }
 
-    public Vote findByUserIdAndRestaurantAndDate(int userId, int restaurantId, LocalDate date){
+    public Vote getByUserIdAndRestaurantAndDate(int userId, int restaurantId, LocalDate date){
         Assert.notNull(date, "date must not be null");
-        return checkNotFoundWithId(dao.findByUserIdAndRestaurantAndDate(userId, restaurantId, date), userId);
+        return checkNotFoundWithId(dao.findByUserIdAndRestaurantIdAndDate(userId, restaurantId, date), userId);
     }
 
     public List<Vote> getVotesByRestaurantAndDate(int restaurantId, LocalDate date){
         Assert.notNull(date, "date must not be null");
-        return checkNotFoundWithId(dao.findByRestaurantAndDate(restaurantId, date), restaurantId);
+        return checkNotFoundWithId(dao.findByRestaurantIdAndDate(restaurantId, date), restaurantId);
     }
 
-    public void vote(int userId, int restaurantId){
+    public Vote vote(int userId, int restaurantId){
         Vote vote = dao.findByUserIdAndDate(userId, LocalDate.now());
         if ( vote == null )
-            save(userId, restaurantId);
+            return save(userId, restaurantId);
         else {
             if (LocalTime.now().isAfter(LocalTime.of(11, 0)))
-            throw new LateForVoteException(LocalTime.of(11, 0));
-            create(vote, userId, restaurantId);
+                throw new LateVoteException(LocalTime.of(11, 0));
+            return update(vote, userId, restaurantId);
         }
     }
 
@@ -63,15 +64,9 @@ public class VoteService {
         return dao.save(vote);
     }
 
-    public void create(Vote vote, int userId, int restaurantId) {
+    public Vote update(Vote vote, int userId, int restaurantId) {
         vote.setRestaurant(restaurantDao.getOne(restaurantId));
         vote.setUser(userDao.getOne(userId));
-        checkNotFoundWithId(dao.save(vote), vote.getId());
-    }
-
-    public void delete(Vote vote, int userId, int restaurantId) {
-        vote.setRestaurant(restaurantDao.getOne(restaurantId));
-        vote.setUser(userDao.getOne(userId));
-        checkNotFoundWithId(dao.save(vote), vote.getId());
+        return checkNotFoundWithId(dao.save(vote), vote.getId());
     }
 }
