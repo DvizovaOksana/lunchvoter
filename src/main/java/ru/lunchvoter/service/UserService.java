@@ -25,7 +25,7 @@ public class UserService {
         return dao.save(user);
     }
 
-    public void delete(int id){
+    public void delete(int id) {
         checkNotFoundWithId(dao.delete(id) != 0, id);
     }
 

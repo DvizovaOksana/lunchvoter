@@ -9,7 +9,7 @@ import java.time.LocalDate;
 
 @Entity
 @Table(name = "votes", uniqueConstraints = {@UniqueConstraint(columnNames = {"date", "user_id", "restaurant_id"}, name = "votes_unique_date_user_restaurant_idx")})
-public class Vote extends AbstractBaseEntity{
+public class Vote extends AbstractBaseEntity {
     @Column(name = "date", nullable = false, columnDefinition = "date default today()")
     @NotNull
     private LocalDate date = LocalDate.now();
@@ -26,7 +26,7 @@ public class Vote extends AbstractBaseEntity{
     @NotNull
     private Restaurant restaurant;
 
-    public Vote(){
+    public Vote() {
 
     }
 
