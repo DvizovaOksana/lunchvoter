@@ -20,7 +20,8 @@ public class UserTo extends BaseTo {
     public UserTo() {
     }
 
-    public UserTo(@NotBlank @Size(min = 1, max = 100) String name, @Email @NotBlank @Size(max = 100) String email, @Size(min = 5, max = 16) String password) {
+    public UserTo(Integer id, String name, String email, String password) {
+        super(id);
         this.name = name;
         this.email = email;
         this.password = password;
