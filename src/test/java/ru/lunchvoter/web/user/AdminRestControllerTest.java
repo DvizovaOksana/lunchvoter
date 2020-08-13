@@ -63,7 +63,7 @@ class AdminRestControllerTest extends AbstractControllerTest {
 
     @Test
     void delete() throws Exception {
-        ResultActions action = perform(MockMvcRequestBuilders.delete(REST_URL + USER_ID)
+        perform(MockMvcRequestBuilders.delete(REST_URL + USER_ID)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNoContent());
         assertThrows(NotFoundException.class, () -> userService.get(USER_ID));
@@ -73,7 +73,7 @@ class AdminRestControllerTest extends AbstractControllerTest {
     void update() throws Exception {
         User updatedUser = getUpdated();
 
-        ResultActions action = perform(MockMvcRequestBuilders.put(REST_URL + USER_ID)
+        perform(MockMvcRequestBuilders.put(REST_URL + USER_ID)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(JsonUtil.writeValue(updatedUser)))
                 .andExpect(status().isNoContent());
