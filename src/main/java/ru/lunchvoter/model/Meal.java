@@ -7,6 +7,7 @@ import ru.lunchvoter.model.AbstractNamedEntity;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
@@ -18,8 +19,7 @@ public class Meal extends AbstractNamedEntity {
     private LocalDate date = LocalDate.now();
 
     @Column(name = "price", nullable = false)
-    @NotNull
-    @Range(min = 0)
+    @Positive
     private Integer price;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -68,5 +68,14 @@ public class Meal extends AbstractNamedEntity {
 
     public void setRestaurant(Restaurant restaurant) {
         this.restaurant = restaurant;
+    }
+
+    @Override
+    public String toString() {
+        return "Meal{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", price=" + price +
+                '}';
     }
 }
