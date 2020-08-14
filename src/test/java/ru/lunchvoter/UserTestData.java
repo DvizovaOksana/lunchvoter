@@ -17,7 +17,7 @@ import static java.time.LocalDate.of;
 100001,Admin,admin@gmail.com,admin,2020-08-04 20:17:10.040000,true
  */
 public class UserTestData {
-    public static TestMatcher<User> USER_MATCHER = TestMatcher.usingFieldsWithIgnoringComparator(User.class, "registered");
+    public static TestMatcher<User> USER_MATCHER = TestMatcher.usingFieldsWithIgnoringComparator(User.class, "registered", "votes", "password");
 
     public static final int NOT_FOUND = 10;
     public static final int USER_ID = START_SEQ;
