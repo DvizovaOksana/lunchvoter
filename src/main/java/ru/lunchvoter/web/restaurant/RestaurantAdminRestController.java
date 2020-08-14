@@ -64,7 +64,7 @@ public class RestaurantAdminRestController {
 
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(value = HttpStatus.NO_CONTENT, reason = "updated")
-    public void update(@RequestBody Restaurant restaurant, @RequestParam int id){
+    public void update(@RequestBody Restaurant restaurant, @PathVariable int id){
         log.info("update restaurant {} with id={}", restaurant, id);
         assureIdConsistent(restaurant, id);
         restaurantService.update(restaurant);
