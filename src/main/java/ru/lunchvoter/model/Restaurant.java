@@ -1,5 +1,6 @@
 package ru.lunchvoter.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.hibernate.annotations.BatchSize;
 import ru.lunchvoter.model.AbstractNamedEntity;
 
@@ -12,6 +13,7 @@ public class Restaurant extends AbstractNamedEntity {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "restaurant")//, cascade = CascadeType.REMOVE, orphanRemoval = true)
     @OrderBy("name ASC")
     @BatchSize(size = 300)
+    @JsonManagedReference
     private List<Meal> meals;
 
     public Restaurant() {

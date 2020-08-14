@@ -27,7 +27,9 @@ VALUES ('Cheeseburger', '2020-08-04', 50*100, 100002),
        ('Water', '2020-08-04', 20*100, 100002),
        ('Juice', '2020-08-04', 70*100, 100003),
        ('Pizza', '2020-08-05', 500*100, 100003),
-       ('Pasta', '2020-08-05', 350*100, 100002)
+       ('Pasta', '2020-08-05', 350*100, 100002),
+       ('Super Lunch BK', now, 400*100, 100003),
+       ('Business Lunch MD', now, 400*100, 100002)
        ;
 
 INSERT INTO VOTES(USER_ID, DATE, RESTAURANT_ID)

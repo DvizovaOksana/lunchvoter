@@ -1,5 +1,6 @@
 package ru.lunchvoter.service;
 
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 import ru.lunchvoter.dao.RestaurantDao;
@@ -30,7 +31,7 @@ public class RestaurantService {
     }
 
     public List<Restaurant> getAll(){
-        return dao.findAll();
+        return dao.findAll(Sort.by("name"));
     }
 
     public Restaurant getWithDishesForDate(int id, LocalDate date){

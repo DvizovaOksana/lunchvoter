@@ -13,7 +13,7 @@ import static ru.lunchvoter.UserTestData.*;
 public class VoteTestData {
     public static final TestMatcher<Vote> VOTE_MATCHER = TestMatcher.usingFieldsWithIgnoringComparator(Vote.class, "user");
 
-    public static final int VOTE1_ID = START_SEQ + 12;
+    public static final int VOTE1_ID = START_SEQ + 14;
 
     public static final LocalDate DATE1 = LocalDate.of(2020,8,4);
     public static final LocalDate DATE2 = LocalDate.of(2020,8,5);

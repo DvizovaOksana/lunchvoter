@@ -18,7 +18,7 @@ public class RestaurantTestData {
     public static final Restaurant RESTAURANT1 = new Restaurant(REST1_ID, "McDonalds");
     public static final Restaurant RESTAURANT2 = new Restaurant(REST2_ID, "Burger King");
 
-    public static final List<Restaurant> RESTAURANTS = List.of(RESTAURANT1, RESTAURANT2);
+    public static final List<Restaurant> RESTAURANTS = List.of(RESTAURANT2, RESTAURANT1);
 
     public static Restaurant getNew() {
         Restaurant restaurant = new Restaurant(null, "White Rabbit");
