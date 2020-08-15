@@ -26,6 +26,10 @@ public class TestMatcher<T> {
         return new TestMatcher<>(clazz, false, fieldsToIgnore);
     }
 
+    public static <T> TestMatcher<T> usingRecursiveComparison(Class<T> clazz, String... fieldsToIgnore) {
+        return new TestMatcher<>(clazz, false, fieldsToIgnore);
+    }
+
     public void assertMatch(T actual, T expected) {
         if (usingEquals) {
             assertThat(actual).isEqualTo(expected);

@@ -4,14 +4,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import ru.lunchvoter.model.Restaurant;
-import ru.lunchvoter.model.User;
 import ru.lunchvoter.service.MealService;
 import ru.lunchvoter.service.RestaurantService;
-import ru.lunchvoter.web.user.AbstractUserController;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -35,9 +31,18 @@ public class RestaurantUserRestController {
 
     @GetMapping
     public List<Restaurant> getAll() {
-        log.info("getAll restaurants for today {}", LocalDate.now());
-        return restaurantService.getAllWithDishesForDate(LocalDate.now());
+        log.info("getAll restaurants for today ({})", LocalDate.now());
+        return restaurantService.getAllWithMealsForDate(LocalDate.now());
     }
 
-
+    @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public Restaurant get(@PathVariable("id") int id,
+                          @RequestParam(value = "withDishes", required = false, defaultValue = "true") boolean withDishes) {
+        log.info("get restaurant {} withDishes = {}", id, withDishes);
+        if (withDishes) {
+            return restaurantService.getWithMealsForDate(id, LocalDate.now());
+        } else {
+            return restaurantService.get(id);
+        }
+    }
 }

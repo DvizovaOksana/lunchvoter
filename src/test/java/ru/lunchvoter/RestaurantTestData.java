@@ -1,12 +1,10 @@
 package ru.lunchvoter;
 
-import ru.lunchvoter.model.Meal;
 import ru.lunchvoter.model.Restaurant;
 
+import java.util.Collections;
 import java.util.List;
 
-import static java.time.LocalDateTime.now;
-import static ru.lunchvoter.MealTestData.*;
 import static ru.lunchvoter.model.AbstractBaseEntity.START_SEQ;
 
 public class RestaurantTestData {
@@ -28,5 +26,10 @@ public class RestaurantTestData {
     public static Restaurant getUpdated() {
         Restaurant updated = new Restaurant(REST1_ID, "UPDATED McDonalds");
         return updated;
+    }
+
+    public static Restaurant getRestaurantWithActualMeals() {
+        RESTAURANT1.setMeals(Collections.singletonList(MealTestData.MEAL10));
+        return RESTAURANT1;
     }
 }

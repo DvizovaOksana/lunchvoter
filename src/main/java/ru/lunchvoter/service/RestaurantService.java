@@ -34,13 +34,13 @@ public class RestaurantService {
         return dao.findAll(Sort.by("name"));
     }
 
-    public Restaurant getWithDishesForDate(int id, LocalDate date){
-        return checkNotFoundWithId(dao.getWithDishesForDate(id, date)
+    public Restaurant getWithMealsForDate(int id, LocalDate date){
+        return checkNotFoundWithId(dao.getWithMealsForDate(id, date)
                 .orElse(null), id);
     }
 
-    public List<Restaurant> getAllWithDishesForDate(LocalDate date){
-        return dao.getAllWithDishesForDate(date);
+    public List<Restaurant> getAllWithMealsForDate(LocalDate date){
+        return dao.getAllWithMealsForDate(date);
     }
 
     public void update(Restaurant restaurant){

@@ -46,17 +46,17 @@ class RestaurantServiceTest extends AbstractServiceTest {
 
     @Test
     void getWithDishesForDate() {
-        RESTAURANT_MATCHER.assertMatch(service.getWithDishesForDate(REST1_ID, MEAL1.getDate()), RESTAURANT1);
+        RESTAURANT_MATCHER.assertMatch(service.getWithMealsForDate(REST1_ID, MEAL1.getDate()), RESTAURANT1);
     }
 
     @Test
     void getAllWithDishesForDate() {
-        RESTAURANT_MATCHER.assertMatch(service.getAllWithDishesForDate(MEAL1.getDate()), List.of(RESTAURANT2, RESTAURANT1));
+        RESTAURANT_MATCHER.assertMatch(service.getAllWithMealsForDate(MEAL1.getDate()), List.of(RESTAURANT2, RESTAURANT1));
     }
 
     @Test
     void getAllWithDishesForDateForDateNotPresent() {
-        RESTAURANT_MATCHER.assertMatch(Collections.emptyList(), service.getAllWithDishesForDate(LocalDate.of(1990, 10, 9)));
+        RESTAURANT_MATCHER.assertMatch(Collections.emptyList(), service.getAllWithMealsForDate(LocalDate.of(1990, 10, 9)));
     }
 
     @Test
