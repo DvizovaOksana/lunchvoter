@@ -3,16 +3,14 @@ package ru.lunchvoter.service;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import ru.lunchvoter.model.User;
 import ru.lunchvoter.model.Vote;
-import ru.lunchvoter.util.exception.LateVoteException;
-import ru.lunchvoter.util.exception.NotFoundException;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static ru.lunchvoter.VoteTestData.*;
 import static ru.lunchvoter.UserTestData.*;
@@ -57,11 +55,10 @@ class VoteServiceTest extends AbstractServiceTest {
 
     @Test
     void voteChanged() {
-        if (LocalTime.now().isAfter(LocalTime.of(11, 0)))
-            assertThrows(LateVoteException.class, () -> {
-                service.vote(USER_ID, REST1_ID);
-                service.vote(USER_ID, REST1_ID);
-            });
+        if (LocalTime.now().isAfter(LocalTime.of(11, 0))){
+            service.vote(USER_ID, REST1_ID);
+            assertNull(service.vote(USER_ID, REST1_ID));
+            }
     }
 
     @Test

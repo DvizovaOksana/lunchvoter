@@ -1,14 +1,17 @@
 package ru.lunchvoter.web.restaurant;
 
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import ru.lunchvoter.TestUtil;
+import ru.lunchvoter.VoteTestData;
 import ru.lunchvoter.model.Restaurant;
-import ru.lunchvoter.service.MealService;
-import ru.lunchvoter.service.RestaurantService;
 import ru.lunchvoter.web.AbstractControllerTest;
+
+import java.time.LocalTime;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
@@ -20,12 +23,6 @@ import static ru.lunchvoter.RestaurantTestData.*;
 class RestaurantUserRestControllerTest extends AbstractControllerTest {
     public static final String REST_URL = RestaurantUserRestController.REST_URL + '/';
     public static final String REST_URL_MEALS = REST_URL + REST1_ID + "/meals/";
-
-    @Autowired
-    private RestaurantService restaurantService;
-
-    @Autowired
-    private MealService mealService;
 
     @Test
     void getAll() throws Exception {
@@ -53,5 +50,28 @@ class RestaurantUserRestControllerTest extends AbstractControllerTest {
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(result -> assertThat(TestUtil.readFromJsonMvcResult(result, Restaurant.class)).usingRecursiveComparison()
                                 .ignoringFields("meals.restaurant").ignoringAllOverriddenEquals().isEqualTo(getRestaurantWithActualMeals()));
+    }
+
+    @Test
+    void vote() throws Exception {
+        perform(MockMvcRequestBuilders.post(REST_URL + REST1_ID + "/vote"))
+                .andExpect(status().isCreated())
+                .andDo(print())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                .andExpect(VoteTestData.VOTE_MATCHER.contentJson(VoteTestData.getActualVote()));
+    }
+
+    @Test
+    @Transactional(propagation = Propagation.NEVER)
+    public void voteChanged() throws Exception {
+        perform(MockMvcRequestBuilders.post(REST_URL + REST1_ID + "/vote"));
+        ResultActions actions = perform(MockMvcRequestBuilders.post(REST_URL + REST1_ID + "/vote"))
+                .andDo(print());
+
+        if (LocalTime.now().isAfter(LocalTime.of(11, 0))) {
+            actions.andExpect(status().isUnprocessableEntity());
+        } else {
+            actions.andExpect(status().isOk());
+        }
     }
 }

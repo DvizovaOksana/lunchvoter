@@ -1,13 +1,11 @@
 package ru.lunchvoter.service;
 
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 import ru.lunchvoter.dao.RestaurantDao;
 import ru.lunchvoter.dao.UserDao;
 import ru.lunchvoter.dao.VoteDao;
 import ru.lunchvoter.model.Vote;
-import ru.lunchvoter.util.exception.LateVoteException;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -51,9 +49,9 @@ public class VoteService {
         if ( vote == null )
             return save(userId, restaurantId);
         else {
-            if (LocalTime.now().isAfter(LocalTime.of(11, 0)))
-                throw new LateVoteException(LocalTime.of(11, 0));
-            return update(vote, userId, restaurantId);
+            if (LocalTime.now().isBefore(LocalTime.of(11, 0)))
+                return update(vote, userId, restaurantId);
+            return null;
         }
     }
 

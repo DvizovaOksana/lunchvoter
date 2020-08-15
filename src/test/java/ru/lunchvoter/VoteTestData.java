@@ -11,7 +11,7 @@ import static ru.lunchvoter.RestaurantTestData.*;
 import static ru.lunchvoter.UserTestData.*;
 
 public class VoteTestData {
-    public static final TestMatcher<Vote> VOTE_MATCHER = TestMatcher.usingFieldsWithIgnoringComparator(Vote.class, "user");
+    public static final TestMatcher<Vote> VOTE_MATCHER = TestMatcher.usingFieldsWithIgnoringComparator(Vote.class, "user", "restaurant");
 
     public static final int VOTE1_ID = START_SEQ + 14;
 
@@ -29,5 +29,9 @@ public class VoteTestData {
 
     public static Vote getNewVoteByUser(){
         return new Vote(null, USER, RESTAURANT1, LocalDate.now());
+    }
+
+    public static Vote getActualVote(){
+        return new Vote(100021, USER, RESTAURANT1, LocalDate.now());
     }
 }
