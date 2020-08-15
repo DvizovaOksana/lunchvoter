@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.lunchvoter.TestUtil;
 import ru.lunchvoter.VoteTestData;
 import ru.lunchvoter.model.Restaurant;
+import ru.lunchvoter.model.Vote;
 import ru.lunchvoter.web.AbstractControllerTest;
 
 import java.time.LocalTime;
@@ -68,7 +69,7 @@ class RestaurantUserRestControllerTest extends AbstractControllerTest {
         ResultActions actions = perform(MockMvcRequestBuilders.post(REST_URL + REST1_ID + "/vote"))
                 .andDo(print());
 
-        if (LocalTime.now().isAfter(LocalTime.of(11, 0))) {
+        if (LocalTime.now().isAfter(Vote.DECISION_TIME)) {
             actions.andExpect(status().isUnprocessableEntity());
         } else {
             actions.andExpect(status().isOk());

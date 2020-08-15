@@ -55,7 +55,7 @@ class VoteServiceTest extends AbstractServiceTest {
 
     @Test
     void voteChanged() {
-        if (LocalTime.now().isAfter(LocalTime.of(11, 0))){
+        if (LocalTime.now().isAfter(Vote.DECISION_TIME)){
             service.vote(USER_ID, REST1_ID);
             assertNull(service.vote(USER_ID, REST1_ID));
             }

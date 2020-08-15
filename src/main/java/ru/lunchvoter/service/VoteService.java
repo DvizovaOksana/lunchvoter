@@ -49,7 +49,7 @@ public class VoteService {
         if ( vote == null )
             return save(userId, restaurantId);
         else {
-            if (LocalTime.now().isBefore(LocalTime.of(11, 0)))
+            if (LocalTime.now().isBefore(Vote.DECISION_TIME))
                 return update(vote, userId, restaurantId);
             return null;
         }
