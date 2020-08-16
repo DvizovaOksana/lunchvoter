@@ -33,6 +33,6 @@ public class VoteTestData {
     }
 
     public static Vote getActualVote(){
-        return new Vote(100021, USER, RESTAURANT1, LocalDate.now());
+        return new Vote(VOTE1_ID+4, USER, RESTAURANT1, LocalDate.now());
     }
 }
