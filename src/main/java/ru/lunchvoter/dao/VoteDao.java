@@ -27,5 +27,8 @@ public interface VoteDao extends JpaRepository<Vote, Integer> {
     Vote findByUserIdAndRestaurantIdAndDate(@Param("userId") int userId, @Param("restaurantId") int restaurantId, @Param("date") LocalDate localDate);
 
     @EntityGraph(attributePaths = {"user"}, type = EntityGraph.EntityGraphType.FETCH)
+    List<Vote> findByRestaurantId(@Param("restaurantId") int restaurantId);
+
+    @EntityGraph(attributePaths = {"user"}, type = EntityGraph.EntityGraphType.FETCH)
     List<Vote> findByRestaurantIdAndDate(@Param("restaurantId") int restaurantId, @Param("date") LocalDate localDate);
 }

@@ -23,13 +23,13 @@ class VoteServiceTest extends AbstractServiceTest {
 
     @Test
     void getVotesByUser() {
-        List<Vote> votes = service.getVotesByUser(USER_ID);
+        List<Vote> votes = service.getAllByUser(USER_ID);
         VOTE_MATCHER.assertMatch(votes, VOTES_USER);
     }
 
     @Test
     void findByUserIdAndDate() {
-        Vote vote = service.getByUserIdAndDate(USER_ID, DATE1);
+        Vote vote = service.getByUserAndDate(USER_ID, DATE1);
         VOTE_MATCHER.assertMatch(vote, VOTE1_USER);
     }
 
@@ -41,14 +41,14 @@ class VoteServiceTest extends AbstractServiceTest {
 
     @Test
     void getVotesByRestaurantAndDate() {
-        List<Vote> votes = service.getVotesByRestaurantAndDate(RESTAURANT2.getId(), DATE2);
+        List<Vote> votes = service.getAllByRestaurantAndDate(RESTAURANT2.getId(), DATE2);
         Assertions.assertThat(votes).isEqualTo(VOTES_REST2_DATE2);
     }
 
     @Test
     void vote() {
         Vote vote = service.vote(USER_ID, RESTAURANT1.getId());
-        Vote newVote = service.getByUserIdAndDate(USER_ID, LocalDate.now());
+        Vote newVote = service.getByUserAndDate(USER_ID, LocalDate.now());
 
         Assertions.assertThat(vote).isEqualTo(newVote);
     }
@@ -68,6 +68,6 @@ class VoteServiceTest extends AbstractServiceTest {
         int newId = created.getId();
         newVote.setId(newId);
         Assertions.assertThat(created).isEqualTo(newVote);
-        Assertions.assertThat(service.getByUserIdAndDate(newVote.getUser().getId(), LocalDate.now())).isEqualTo(newVote);
+        Assertions.assertThat(service.getByUserAndDate(newVote.getUser().getId(), LocalDate.now())).isEqualTo(newVote);
     }
 }

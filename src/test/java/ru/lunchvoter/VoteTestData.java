@@ -25,6 +25,7 @@ public class VoteTestData {
     public static final Vote VOTE2_ADMIN = new Vote(VOTE1_ID+3, ADMIN, RESTAURANT2, DATE2);
 
     public static final List<Vote> VOTES_USER = List.of(VOTE1_USER, VOTE2_USER);
+    public static final List<Vote> VOTES_RESTAURANT2 = List.of(VOTE1_ADMIN, VOTE2_USER, VOTE2_ADMIN);
     public static final List<Vote> VOTES_REST2_DATE2 = List.of(VOTE2_USER, VOTE2_ADMIN);
 
     public static Vote getNewVoteByUser(){

@@ -25,11 +25,11 @@ public class VoteService {
         this.restaurantDao = restaurantDao;
     }
 
-    public List<Vote> getVotesByUser(int userId){
+    public List<Vote> getAllByUser(int userId){
         return checkNotFoundWithId(dao.findByUserId(userId), userId);
     }
 
-    public Vote getByUserIdAndDate(int userId, LocalDate date){
+    public Vote getByUserAndDate(int userId, LocalDate date){
         Assert.notNull(date, "date must not be null");
         return checkNotFoundWithId(dao.findByUserIdAndDate(userId, date), userId);
     }
@@ -39,7 +39,11 @@ public class VoteService {
         return checkNotFoundWithId(dao.findByUserIdAndRestaurantIdAndDate(userId, restaurantId, date), userId);
     }
 
-    public List<Vote> getVotesByRestaurantAndDate(int restaurantId, LocalDate date){
+    public List<Vote> getAllByRestaurant(int restaurantId){
+        return checkNotFoundWithId(dao.findByRestaurantId(restaurantId), restaurantId);
+    }
+
+    public List<Vote> getAllByRestaurantAndDate(int restaurantId, LocalDate date){
         Assert.notNull(date, "date must not be null");
         return checkNotFoundWithId(dao.findByRestaurantIdAndDate(restaurantId, date), restaurantId);
     }
