@@ -18,17 +18,17 @@ public interface VoteDao extends JpaRepository<Vote, Integer> {
     @Transactional
     Vote save(Vote vote);
 
-    @EntityGraph(attributePaths = {"restaurant"}, type = EntityGraph.EntityGraphType.FETCH)
+    @EntityGraph(attributePaths = {"restaurant"}, type = EntityGraph.EntityGraphType.LOAD)
     List<Vote> findByUserId(int userId);
 
-    @EntityGraph(attributePaths = {"restaurant"}, type = EntityGraph.EntityGraphType.FETCH)
+    @EntityGraph(attributePaths = {"restaurant"}, type = EntityGraph.EntityGraphType.LOAD)
     Vote findByUserIdAndDate(@Param("userId") int userId, @Param("date") LocalDate date);
 
     Vote findByUserIdAndRestaurantIdAndDate(@Param("userId") int userId, @Param("restaurantId") int restaurantId, @Param("date") LocalDate localDate);
 
-    @EntityGraph(attributePaths = {"user"}, type = EntityGraph.EntityGraphType.FETCH)
+    @EntityGraph(attributePaths = {"user"}, type = EntityGraph.EntityGraphType.LOAD)
     List<Vote> findByRestaurantId(@Param("restaurantId") int restaurantId);
 
-    @EntityGraph(attributePaths = {"user"}, type = EntityGraph.EntityGraphType.FETCH)
+    @EntityGraph(attributePaths = {"user"}, type = EntityGraph.EntityGraphType.LOAD)
     List<Vote> findByRestaurantIdAndDate(@Param("restaurantId") int restaurantId, @Param("date") LocalDate localDate);
 }
