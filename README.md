@@ -26,7 +26,7 @@ P.P.S.: Asume that your API will be used by a frontend developer to build fronte
 
 
 ### Admin Users API
-Base URL: http://localhost:8080/lunchvoter/rest/admin/
+Base URL: http://localhost:8080/lunchvoter/rest/admin/users
 
 | Description | Method | Curl command                                          | Response code |
 |-------------|--------|-----------------------------------------------------------------------------------------|-----|
@@ -42,7 +42,7 @@ Base URL: http://localhost:8080/lunchvoter/rest/admin/
 Base URL: http://localhost:8080/lunchvoter/rest/profile/
 
 | Description | Method | Curl command                                          | Response code |
-|-------------|--------|-----------------------------------------------------------------------------------------|-----|
+|-------------|--------|-------------------------------------------------------|----|
 | Get own     |   GET  | `curl -s http://localhost:8080/lunchvoter/rest/profile/ --user user@gmail.com:password` | 200 |
 | Update      |   PUT  | `curl -s http://localhost:8080/lunchvoter/rest/profile -X PUT -H 'Content-Type:application/json;charset=UTF-8' --user user@gmail.com:password -d '{"name":"UpdatedUser", "email":"userUpdated@gmail.com", "password":"updatedPass"}'` | 204 |
 | Delete      | DELETE | `curl -s http://localhost:8080/lunchvoter/rest/profile/ -X DELETE --user user@gmail.com:password` | 204 |
@@ -52,7 +52,7 @@ Base URL: http://localhost:8080/lunchvoter/rest/profile/
 Base URL: http://localhost:8080/lunchvoter/rest/admin/restaurants
 
 | Description | Method | Curl command                                          | Response code |
-|-------------|--------|-----------------------------------------------------------------------------------------|-----|
+|-------------|--------|-------------------------------------------------------|----|
 | Get all restaurants     |   GET  | `curl -s http://localhost:8080/lunchvoter/rest/admin/restaurants --user admin@gmail.com:admin` | 200 |
 | Get restaurant with id |   GET  | `curl -s http://localhost:8080/lunchvoter/rest/admin/restaurants/100003 --user admin@gmail.com:admin` | 200 |
 | Create restaurant     |   POST | `curl -s -X POST -d '{"name":"newRestaurant"}' -H 'Content-Type:application/json' http://localhost:8080/lunchvoter/rest/admin/restaurants --user admin@gmail.com:admin` | 201 |
@@ -67,7 +67,7 @@ Base URL: http://localhost:8080/lunchvoter/rest/admin/restaurants
 Base URL: http://localhost:8080/lunchvoter/rest/restaurants
 
 | Description | Method | Curl command                                          | Response code |
-|-------------|--------|-----------------------------------------------------------------------------------------|-----|
+|-------------|--------|-------------------------------------------------------|----|
 | Get all restaurants with meals for today |   GET  | `curl -s http://localhost:8080/lunchvoter/rest/restaurants --user user@gmail.com:password` | 200 |
 | Get restaurant with meals with id |   GET  | `curl -s http://localhost:8080/lunchvoter/rest/restaurants/100002 --user user@gmail.com:password` | 200 |
 | Vote for restaurant     |   POST | `curl -s  -X POST -H 'Content-Type:application/json' http://localhost:8080/lunchvoter/rest/restaurants/100002/vote --user user@gmail.com:password` | 201 |
@@ -79,7 +79,7 @@ Base URL: http://localhost:8080/lunchvoter/rest/restaurants
 Base URL: http://localhost:8080/lunchvoter/rest/admin/votes
 
 | Description | Method | Curl command                                          | Response code |
-|-------------|--------|-----------------------------------------------------------------------------------------|-----|
+|-------------|--------|-------------------------------------------------------|----|
 | Get all votes by user with restaurants |   GET  | `curl -s http://localhost:8080/lunchvoter/rest/admin/votes/user/100000 --user admin@gmail.com:admin` | 200 |
 | Get vote by user for specified date with restaurants |   GET  | `curl -s http://localhost:8080/lunchvoter/rest/admin/votes/user/100000?date=2020-08-05 --user admin@gmail.com:admin` | 200 |
 | Get all votes for restaurant with users |   GET | `curl -s http://localhost:8080/lunchvoter/rest/admin/votes/restaurant/100002 --user admin@gmail.com:admin` | 200 |
@@ -90,6 +90,6 @@ Base URL: http://localhost:8080/lunchvoter/rest/admin/votes
 Base URL: http://localhost:8080/lunchvoter/rest/votes
 
 | Description | Method | Curl command                                          | Response code |
-|-------------|--------|-----------------------------------------------------------------------------------------|-----|
+|-------------|--------|-------------------------------------------------------|----|
 | Get own votes with restaurants |   GET  | `curl -s http://localhost:8080/lunchvoter/rest/votes --user user@gmail.com:password` | 200 |
 | Get own vote for specified date with restaurants |   GET  | `curl -s http://localhost:8080/lunchvoter/rest/votes?date=2020-08-04 --user user@gmail.com:password` | 200 |
