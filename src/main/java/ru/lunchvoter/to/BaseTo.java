@@ -1,8 +1,9 @@
 package ru.lunchvoter.to;
 
 import org.springframework.data.domain.Persistable;
+import ru.lunchvoter.HasId;
 
-public abstract class BaseTo implements Persistable<Integer> {
+public abstract class BaseTo implements HasId {
     private Integer id;
 
     public BaseTo() {
@@ -12,16 +13,13 @@ public abstract class BaseTo implements Persistable<Integer> {
         this.id = id;
     }
 
+    @Override
     public Integer getId() {
         return id;
     }
 
+    @Override
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    @Override
-    public boolean isNew() {
-        return id == null;
     }
 }

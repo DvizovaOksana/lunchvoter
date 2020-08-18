@@ -5,6 +5,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.lunchvoter.model.User;
+import ru.lunchvoter.to.UserTo;
 
 import javax.validation.Valid;
 
@@ -28,7 +29,7 @@ public class ProfileRestController extends AbstractUserController {
 
     @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void update(@RequestBody User user) {
-        super.update(user, authUserId());
+    public void update(@RequestBody UserTo userTo) {
+        super.update(userTo, authUserId());
     }
 }

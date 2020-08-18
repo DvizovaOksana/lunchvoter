@@ -3,22 +3,21 @@ package ru.lunchvoter.web.user;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import ru.lunchvoter.model.User;
 import ru.lunchvoter.service.UserService;
+import ru.lunchvoter.to.UserTo;
+import ru.lunchvoter.util.UserUtil;
 import ru.lunchvoter.util.exception.NotFoundException;
 import ru.lunchvoter.util.json.JsonUtil;
 import ru.lunchvoter.web.AbstractControllerTest;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static ru.lunchvoter.TestUtil.readFromJson;
 import static ru.lunchvoter.UserTestData.*;
-import static ru.lunchvoter.UserTestData.ADMIN_ID;
 
 class ProfileRestControllerTest extends AbstractControllerTest {
 
@@ -45,13 +44,13 @@ class ProfileRestControllerTest extends AbstractControllerTest {
 
     @Test
     void update() throws Exception {
-        User updatedUser = getUpdated();
+        UserTo updatedUserTo = new UserTo(null, "Updated Name", "updated@gmail.com", "updatedPass");
 
         perform(MockMvcRequestBuilders.put(REST_URL)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(JsonUtil.writeValue(updatedUser)))
+                .content(JsonUtil.writeValue(updatedUserTo)))
                 .andExpect(status().isNoContent());
 
-        USER_MATCHER.assertMatch(userService.get(USER_ID), updatedUser);
+        USER_MATCHER.assertMatch(userService.get(USER_ID), UserUtil.updateFromTo(new User(USER), updatedUserTo));
     }
 }

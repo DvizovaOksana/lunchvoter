@@ -5,6 +5,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 import ru.lunchvoter.dao.UserDao;
 import ru.lunchvoter.model.User;
+import ru.lunchvoter.to.UserTo;
+import ru.lunchvoter.util.UserUtil;
 
 import java.util.List;
 
@@ -43,7 +45,15 @@ public class UserService {
 
     public void update(User user) {
         Assert.notNull(user, "user must not be null");
-        checkNotFoundWithId(dao.save(user), user.getId());
+        dao.save(user);
+    }
+
+    @Transactional
+    public void update(UserTo userTo) {
+        Assert.notNull(userTo, "user must not be null");
+        User user = get(userTo.getId());
+        User updatedUser = UserUtil.updateFromTo(user, userTo);
+        dao.save(updatedUser);
     }
 
     @Transactional
