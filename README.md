@@ -36,6 +36,7 @@ Base URL: http://localhost:8080/lunchvoter/rest/admin/users
 | Add new User|   POST  | `curl -s -X POST -d '{"name":"New user","email":"new@gmail.com","password":"newpass","roles":["ROLE_USER"]}' -H 'Content-Type:application/json' http://localhost:8080/lunchvoter/rest/admin/users --user admin@gmail.com:admin` | 201 |
 | Update      | PUT | `curl -s -X PUT -d '{"id":100001,"name":"Updated","email":"admin@gmail.com","password":"updatedpass","roles":["ROLE_USER","ROLE_ADMIN"]}' -H 'Content-type: application/json' http://localhost:8080/lunchvoter/rest/admin/users/100001 --user admin@gmail.com:admin` | 204 |
 | Delete      | DELETE | `curl -s -X DELETE http://localhost:8080/lunchvoter/rest/admin/users/100000 --user admin@gmail.com:admin` | 204 |
+| Enable/disable| PATCH | `curl -s -X PATCH http://localhost:8080/lunchvoter/rest/admin/users/100000?enabled=false --user admin@gmail.com:admin` | 204 |
 
 
 ### User Profile API

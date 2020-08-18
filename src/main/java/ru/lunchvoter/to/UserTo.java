@@ -14,7 +14,8 @@ public class UserTo extends BaseTo {
     @Size(max = 100)
     private String email;
 
-    @Size(min = 5, max = 16)
+    @NotBlank
+    @Size(min = 5, max = 32, message = "length must be between 5 and 32 characters")
     private String password;
 
     public UserTo() {
