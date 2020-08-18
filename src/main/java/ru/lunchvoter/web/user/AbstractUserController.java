@@ -5,6 +5,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import ru.lunchvoter.model.User;
 import ru.lunchvoter.service.UserService;
+import ru.lunchvoter.to.UserTo;
+import ru.lunchvoter.util.UserUtil;
 
 import java.util.List;
 
@@ -31,6 +33,11 @@ public abstract class AbstractUserController {
         log.info("create {}", user);
         checkNew(user);
         return service.create(user);
+    }
+
+    public User create(UserTo userTo) {
+        log.info("create from to {}", userTo);
+        return create(UserUtil.createNewFromTo(userTo));
     }
 
     public void delete(int id) {
