@@ -26,7 +26,8 @@ class VoteAdminRestControllerTest extends AbstractControllerTest {
 
     @Test
     void getForUser() throws Exception {
-        perform(MockMvcRequestBuilders.get(REST_URL + "user/" + USER_ID))
+        perform(MockMvcRequestBuilders.get(REST_URL + "user/" + USER_ID)
+                .with(userHttpBasic(ADMIN)))
                 .andExpect(status().isOk())
                 .andDo(print())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
@@ -36,7 +37,8 @@ class VoteAdminRestControllerTest extends AbstractControllerTest {
     @Test
     void getForUserAndDate() throws Exception {
         perform(MockMvcRequestBuilders.get(REST_URL + "user/" + USER_ID)
-                .param("date", DATE1.toString()))
+                .param("date", DATE1.toString())
+                .with(userHttpBasic(ADMIN)))
                 .andExpect(status().isOk())
                 .andDo(print())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
@@ -46,7 +48,8 @@ class VoteAdminRestControllerTest extends AbstractControllerTest {
 
     @Test
     void getAllForRestaurant() throws Exception{
-        perform(MockMvcRequestBuilders.get(REST_URL + "restaurant/" + REST2_ID))
+        perform(MockMvcRequestBuilders.get(REST_URL + "restaurant/" + REST2_ID)
+                .with(userHttpBasic(ADMIN)))
                 .andExpect(status().isOk())
                 .andDo(print())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
@@ -56,12 +59,26 @@ class VoteAdminRestControllerTest extends AbstractControllerTest {
     @Test
     void getAllForRestaurantAndDate() throws Exception{
         perform(MockMvcRequestBuilders.get(REST_URL + "restaurant/" + REST2_ID)
-                .param("date", DATE2.toString()))
+                .param("date", DATE2.toString())
+                .with(userHttpBasic(ADMIN)))
                 .andExpect(status().isOk())
                 .andDo(print())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect((result) -> assertThat(readListFromJsonMvcResult(result, Vote.class))
                         .isEqualTo(VOTES_REST2_DATE2));
 
+    }
+
+    @Test
+    void getUnAuth() throws Exception {
+        perform(MockMvcRequestBuilders.get(REST_URL))
+                .andExpect(status().isUnauthorized());
+    }
+
+    @Test
+    void getForbidden() throws Exception {
+        perform(MockMvcRequestBuilders.get(REST_URL)
+                .with(userHttpBasic(USER)))
+                .andExpect(status().isForbidden());
     }
 }

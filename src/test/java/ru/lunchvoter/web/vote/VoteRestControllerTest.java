@@ -13,6 +13,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static ru.lunchvoter.UserTestData.USER;
 import static ru.lunchvoter.VoteTestData.*;
 import static ru.lunchvoter.TestUtil.*;
 
@@ -22,7 +23,8 @@ class VoteRestControllerTest extends AbstractControllerTest {
 
     @Test
     void getAllOwn() throws Exception {
-        perform(MockMvcRequestBuilders.get(VoteRestController.REST_URL))
+        perform(MockMvcRequestBuilders.get(VoteRestController.REST_URL)
+                .with(userHttpBasic(USER)))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect((result) -> assertThat(readListFromJsonMvcResult(result, Vote.class)).isEqualTo(VOTES_USER));
@@ -31,7 +33,8 @@ class VoteRestControllerTest extends AbstractControllerTest {
     @Test
     void getAllOwnForDate() throws Exception {
         perform(MockMvcRequestBuilders.get(VoteRestController.REST_URL)
-                .param("date", DATE1.toString()))
+                .param("date", DATE1.toString())
+                .with(userHttpBasic(USER)))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect((result) -> assertThat(readListFromJsonMvcResult(result, Vote.class)).isEqualTo(Collections.singletonList(VOTE1_USER)));

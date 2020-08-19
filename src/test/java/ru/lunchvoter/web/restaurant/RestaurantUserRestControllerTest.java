@@ -20,6 +20,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static ru.lunchvoter.RestaurantTestData.*;
+import static ru.lunchvoter.TestUtil.userHttpBasic;
+import static ru.lunchvoter.UserTestData.USER;
 
 class RestaurantUserRestControllerTest extends AbstractControllerTest {
     public static final String REST_URL = RestaurantUserRestController.REST_URL + '/';
@@ -27,7 +29,8 @@ class RestaurantUserRestControllerTest extends AbstractControllerTest {
 
     @Test
     void getAll() throws Exception {
-        perform(MockMvcRequestBuilders.get(REST_URL))
+        perform(MockMvcRequestBuilders.get(REST_URL)
+                .with(userHttpBasic(USER)))
                 .andExpect(status().isOk())
                 .andDo(print())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
@@ -36,7 +39,8 @@ class RestaurantUserRestControllerTest extends AbstractControllerTest {
 
     @Test
     void get() throws Exception {
-        perform(MockMvcRequestBuilders.get(REST_URL + REST1_ID))
+        perform(MockMvcRequestBuilders.get(REST_URL + REST1_ID)
+                .with(userHttpBasic(USER)))
                 .andExpect(status().isOk())
                 .andDo(print())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
@@ -45,7 +49,8 @@ class RestaurantUserRestControllerTest extends AbstractControllerTest {
 
     @Test
     void getWithMeals() throws Exception {
-        perform(MockMvcRequestBuilders.get(REST_URL + REST1_ID + "?withDishes = true"))
+        perform(MockMvcRequestBuilders.get(REST_URL + REST1_ID + "?withDishes = true")
+                .with(userHttpBasic(USER)))
                 .andExpect(status().isOk())
                 .andDo(print())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
@@ -55,7 +60,8 @@ class RestaurantUserRestControllerTest extends AbstractControllerTest {
 
     @Test
     void vote() throws Exception {
-        perform(MockMvcRequestBuilders.post(REST_URL + REST1_ID + "/vote"))
+        perform(MockMvcRequestBuilders.post(REST_URL + REST1_ID + "/vote")
+                .with(userHttpBasic(USER)))
                 .andExpect(status().isCreated())
                 .andDo(print())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
@@ -65,8 +71,10 @@ class RestaurantUserRestControllerTest extends AbstractControllerTest {
     @Test
     @Transactional(propagation = Propagation.NEVER)
     public void voteChanged() throws Exception {
-        perform(MockMvcRequestBuilders.post(REST_URL + REST1_ID + "/vote"));
-        ResultActions actions = perform(MockMvcRequestBuilders.post(REST_URL + REST1_ID + "/vote"))
+        perform(MockMvcRequestBuilders.post(REST_URL + REST1_ID + "/vote")
+                .with(userHttpBasic(USER)));
+        ResultActions actions = perform(MockMvcRequestBuilders.post(REST_URL + REST1_ID + "/vote")
+                .with(userHttpBasic(USER)))
                 .andDo(print());
 
         if (LocalTime.now().isAfter(Vote.DECISION_TIME)) {
