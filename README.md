@@ -44,9 +44,10 @@ Base URL: http://localhost:8080/lunchvoter/rest/profile/
 
 | Description | Method | Curl command                                          | Response code |
 |-------------|------|-------------------------------------------------------|----|
-| Get own     |   GET  | `curl -s http://localhost:8080/lunchvoter/rest/profile/ --user user@gmail.com:password` | 200 |
-| Update      |   PUT  | `curl -s http://localhost:8080/lunchvoter/rest/profile -X PUT -H 'Content-Type:application/json;charset=UTF-8' --user user@gmail.com:password -d '{"name":"UpdatedUser", "email":"userUpdated@gmail.com", "password":"updatedPass"}'` | 204 |
-| Delete      | DELETE | `curl -s http://localhost:8080/lunchvoter/rest/profile/ -X DELETE --user user@gmail.com:password` | 204 |
+| Register    | POST | `curl -s http://localhost:8080/lunchvoter/rest/profile/register -X POST -H 'Content-Type:application/json;charset=UTF-8' -d '{"name":"New User", "email":"newEmail@gmail.com", "password":"newPassword"}'` | 201 |
+| Get own     | GET  | `curl -s http://localhost:8080/lunchvoter/rest/profile/ --user user@gmail.com:password` | 200 |
+| Update      | PUT  | `curl -s http://localhost:8080/lunchvoter/rest/profile -X PUT -H 'Content-Type:application/json;charset=UTF-8' --user user@gmail.com:password -d '{"name":"UpdatedUser", "email":"userUpdated@gmail.com", "password":"updatedPass"}'` | 204 |
+| Delete      |DELETE| `curl -s http://localhost:8080/lunchvoter/rest/profile/ -X DELETE --user user@gmail.com:password` | 204 |
 
 
 ### Admin Restaurants API
