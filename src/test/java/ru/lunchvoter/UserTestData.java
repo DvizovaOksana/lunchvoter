@@ -2,6 +2,7 @@ package ru.lunchvoter;
 
 import ru.lunchvoter.model.Role;
 import ru.lunchvoter.model.User;
+import ru.lunchvoter.util.json.JsonUtil;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -41,5 +42,9 @@ public class UserTestData {
 
     public static User getDuplicate(){
         return new User(null, "Duplicate", "user@gmail.com", "newPass", Role.ROLE_USER);
+    }
+
+    public static String jsonWithPassword(User user, String passw) {
+        return JsonUtil.writeAdditionProps(user, "password", passw);
     }
 }

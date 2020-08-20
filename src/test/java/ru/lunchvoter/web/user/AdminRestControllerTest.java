@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import ru.lunchvoter.UserTestData;
 import ru.lunchvoter.model.User;
 import ru.lunchvoter.service.UserService;
 import ru.lunchvoter.util.exception.NotFoundException;
@@ -62,7 +63,8 @@ class AdminRestControllerTest extends AbstractControllerTest {
         ResultActions action = perform(MockMvcRequestBuilders.post(REST_URL)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(JsonUtil.writeValue(newUser))
-                .with(userHttpBasic(ADMIN)))
+                .with(userHttpBasic(ADMIN))
+                .content(UserTestData.jsonWithPassword(newUser, "newPass")))
                 .andExpect(status().isCreated());
 
         User created = readFromJson(action, User.class);
@@ -89,7 +91,8 @@ class AdminRestControllerTest extends AbstractControllerTest {
         perform(MockMvcRequestBuilders.put(REST_URL + USER_ID)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(JsonUtil.writeValue(updatedUser))
-                .with(userHttpBasic(ADMIN)))
+                .with(userHttpBasic(ADMIN))
+                .content(UserTestData.jsonWithPassword(updatedUser, updatedUser.getPassword())))
                 .andExpect(status().isNoContent());
 
         USER_MATCHER.assertMatch(userService.get(USER_ID), updatedUser);
