@@ -9,10 +9,8 @@ import ru.lunchvoter.MealTestData;
 import ru.lunchvoter.RestaurantTestData;
 import ru.lunchvoter.model.Meal;
 import ru.lunchvoter.model.Restaurant;
-import ru.lunchvoter.model.User;
 import ru.lunchvoter.service.MealService;
 import ru.lunchvoter.service.RestaurantService;
-import ru.lunchvoter.service.UserService;
 import ru.lunchvoter.util.exception.NotFoundException;
 import ru.lunchvoter.util.json.JsonUtil;
 import ru.lunchvoter.web.AbstractControllerTest;
@@ -59,6 +57,14 @@ class RestaurantAdminRestControllerTest extends AbstractControllerTest {
                 .andDo(print())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(RESTAURANT_MATCHER.contentJson(RESTAURANT1));
+    }
+
+    @Test
+    void getNotFound() throws Exception {
+        perform(MockMvcRequestBuilders.get(REST_URL + 10)
+                .with(userHttpBasic(ADMIN)))
+                .andDo(print())
+                .andExpect(status().isUnprocessableEntity());
     }
 
     @Test

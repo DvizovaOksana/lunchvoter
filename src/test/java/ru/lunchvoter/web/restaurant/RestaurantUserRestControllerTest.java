@@ -11,6 +11,7 @@ import ru.lunchvoter.VoteTestData;
 import ru.lunchvoter.model.Restaurant;
 import ru.lunchvoter.model.Vote;
 import ru.lunchvoter.web.AbstractControllerTest;
+import ru.lunchvoter.web.vote.VoteRestController;
 
 import java.time.LocalTime;
 
@@ -45,6 +46,14 @@ class RestaurantUserRestControllerTest extends AbstractControllerTest {
                 .andDo(print())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(RESTAURANT_MATCHER.contentJson(RESTAURANT1));
+    }
+
+    @Test
+    void getNotFound() throws Exception {
+        perform(MockMvcRequestBuilders.get(REST_URL + 10)
+                .with(userHttpBasic(USER)))
+                .andDo(print())
+                .andExpect(status().isUnprocessableEntity());
     }
 
     @Test
