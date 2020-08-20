@@ -6,13 +6,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import ru.lunchvoter.AuthorizedUser;
 import ru.lunchvoter.model.Restaurant;
 import ru.lunchvoter.model.Vote;
 import ru.lunchvoter.service.RestaurantService;
 import ru.lunchvoter.service.VoteService;
-import ru.lunchvoter.web.SecurityUtil;
 
 import java.net.URI;
 import java.time.LocalDate;
@@ -52,9 +53,9 @@ public class RestaurantUserRestController {
     }
 
     @PostMapping(value = "/{id}/vote", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Vote> vote(@PathVariable("id") int id) {
-        log.info("vote for restaurant {} by user {}", id, SecurityUtil.authUserId());
-        Vote vote = voteService.vote(SecurityUtil.authUserId(), id);
+    public ResponseEntity<Vote> vote(@PathVariable("id") int id, @AuthenticationPrincipal AuthorizedUser authUser) {
+        log.info("vote for restaurant {} by user {}", id, authUser.getId());
+        Vote vote = voteService.vote(authUser.getId(), id);
         if (vote != null){
             URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
                     .path(REST_URL + "/{id}")

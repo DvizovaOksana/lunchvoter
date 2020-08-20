@@ -5,10 +5,12 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.MediaType;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import ru.lunchvoter.AuthorizedUser;
 import ru.lunchvoter.model.Vote;
 import ru.lunchvoter.service.VoteService;
 import ru.lunchvoter.web.SecurityUtil;
@@ -33,8 +35,8 @@ public class VoteRestController {
 
     @GetMapping()
     public List<Vote> getOwn(@RequestParam(required = false)
-                             @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
-        int userId = SecurityUtil.authUserId();
+                             @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date, @AuthenticationPrincipal AuthorizedUser authUser) {
+        int userId = authUser.getId();
         log.info("get votes for user {} and date {}", userId, date);
         return (date == null)
                 ? voteService.getAllByUser(userId)
