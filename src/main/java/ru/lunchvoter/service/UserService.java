@@ -2,9 +2,9 @@ package ru.lunchvoter.service;
 
 import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
@@ -16,21 +16,25 @@ import ru.lunchvoter.util.UserUtil;
 
 import java.util.List;
 
+import static ru.lunchvoter.util.UserUtil.prepareToSave;
 import static ru.lunchvoter.util.ValidationUtil.checkNotFoundWithId;
 import static ru.lunchvoter.util.ValidationUtil.checkNotFound;
 
 @Service("userService")
 @Scope(proxyMode = ScopedProxyMode.TARGET_CLASS)
 public class UserService implements UserDetailsService {
-    private final UserDao dao;
 
-    public UserService(UserDao dao) {
+    private final UserDao dao;
+    private final PasswordEncoder passwordEncoder;
+
+    public UserService(UserDao dao, PasswordEncoder passwordEncoder) {
         this.dao = dao;
+        this.passwordEncoder = passwordEncoder;
     }
 
     public User create(User user) {
         Assert.notNull(user, "user must not be null");
-        return dao.save(user);
+        return prepareAndSave(user);
     }
 
     public void delete(int id) {
@@ -52,7 +56,7 @@ public class UserService implements UserDetailsService {
 
     public void update(User user) {
         Assert.notNull(user, "user must not be null");
-        dao.save(user);
+        prepareAndSave(user);
     }
 
     @Transactional
@@ -60,7 +64,7 @@ public class UserService implements UserDetailsService {
         Assert.notNull(userTo, "user must not be null");
         User user = get(userTo.getId());
         User updatedUser = UserUtil.updateFromTo(user, userTo);
-        dao.save(updatedUser);
+        prepareAndSave(updatedUser);
     }
 
     @Transactional
@@ -77,5 +81,9 @@ public class UserService implements UserDetailsService {
             throw new UsernameNotFoundException("User " + email + " is not found");
         }
         return new AuthorizedUser(user);
+    }
+
+    private User prepareAndSave(User user) {
+        return dao.save(prepareToSave(user, passwordEncoder));
     }
 }
