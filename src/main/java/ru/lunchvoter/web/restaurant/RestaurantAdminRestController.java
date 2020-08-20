@@ -50,7 +50,7 @@ public class RestaurantAdminRestController {
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public  ResponseEntity<Restaurant> create(@RequestBody Restaurant restaurant){
+    public  ResponseEntity<Restaurant> create(@Valid @RequestBody Restaurant restaurant){
         log.info("create restaurant {}", restaurant);
         checkNew(restaurant);
         Restaurant created = restaurantService.create(restaurant);
@@ -64,7 +64,7 @@ public class RestaurantAdminRestController {
 
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(value = HttpStatus.NO_CONTENT, reason = "updated")
-    public void update(@RequestBody Restaurant restaurant, @PathVariable int id){
+    public void update(@Valid @RequestBody Restaurant restaurant, @PathVariable int id){
         log.info("update restaurant {} with id={}", restaurant, id);
         assureIdConsistent(restaurant, id);
         restaurantService.update(restaurant);
